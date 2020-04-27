@@ -7,8 +7,8 @@ then
     echo "Puppet Master is already installed. Exiting..."
 else
     # Install Puppet Master
-    wget https://apt.puppetlabs.com/puppetlabs-release-trusty.deb && \
-    sudo dpkg -i puppetlabs-release-trusty.deb && \
+    wget http://apt.puppetlabs.com/puppet5-release-xenial.deb && \
+    sudo dpkg -i puppet5-release-xenial.deb && \
     sudo apt-get update -yq && sudo apt-get upgrade -yq && \
     sudo apt-get install -yq puppetmaster
 
@@ -24,11 +24,12 @@ else
 
     # Install some initial puppet modules on Puppet Master server
     sudo puppet module install puppetlabs-ntp
-    sudo puppet module install garethr-docker
+    sudo puppet module install puppetlabs-docker
     sudo puppet module install puppetlabs-git
     sudo puppet module install puppetlabs-vcsrepo
     sudo puppet module install garystafford-fig
+    sudo puppet module install puppetlabs-kubernetes
 
     # symlink manifest from Vagrant synced folder location
-    ln -s /vagrant/site.pp /etc/puppet/manifests/site.pp
+    #ln -s /vagrant/site.pp /etc/puppet/manifests/site.pp
 fi

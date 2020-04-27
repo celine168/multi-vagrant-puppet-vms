@@ -6,6 +6,9 @@ if ps aux | grep "puppet agent" | grep -v grep 2> /dev/null
 then
     echo "Puppet Agent is already installed. Moving on..."
 else
+    wget -P /tmp/ http://apt.puppetlabs.com/puppet5-release-xenial.deb
+    dpkg -i /tmp/puppet5-release-xenial.deb
+    apt-get update    
     sudo apt-get install -yq puppet
 fi
 
@@ -15,10 +18,10 @@ then
 else
     sudo apt-get update -yq && sudo apt-get upgrade -yq
 
-    sudo puppet resource cron puppet-agent ensure=present user=root minute=30 \
-        command='/usr/bin/puppet agent --onetime --no-daemonize --splay'
+   # sudo puppet resource cron puppet-agent ensure=present user=root minute=30 \
+     #   command='/usr/bin/puppet agent --onetime --no-daemonize --splay'
 
-    sudo puppet resource service puppet ensure=running enable=true
+    #sudo puppet resource service puppet ensure=running enable=true
 
     # Configure /etc/hosts file
     echo "" | sudo tee --append /etc/hosts 2> /dev/null && \
